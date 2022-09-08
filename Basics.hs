@@ -324,6 +324,7 @@ error will trigger.
 -}
 
 -- >>> 1 + 2 + 3 + error "Here!"
+-- Here!
 
 {-
 However, we won't trigger an error that is in dead code, such as in
@@ -389,7 +390,7 @@ Thus:
 -}
 
 -- >>> const (error "Here!") 4
--- 3
+-- 4
 
 {-
 We'll see more examples of laziness throughout the semester. Sometimes we use the word "strictness" to
@@ -802,7 +803,8 @@ error if it is ever evaluated.
 -}
 
 jn' :: Maybe (Maybe a) -> Maybe a
-jn' = undefined
+jn' (Just x) = x
+jn' Nothing = Nothing
 
 {-
 'Maybe' is useful for partial functions
@@ -833,7 +835,7 @@ l1 :: [Double]
 l1 = [1.0, 2.0, 3.0, 4.0]
 
 l2 :: [Int]
-l2 = undefined -- make a list of numbers
+l2 = [25, 0, 5] -- make a list of numbers
 
 {-
 Lists can contain structured data...
@@ -847,7 +849,7 @@ l3 = [(1, True), (2, False)]
 -}
 
 l4 :: [[Int]]
-l4 = undefined -- make a list of lists
+l4 = [[1, 4], [], [3]] -- make a list of lists
 
 {-
 List elements *must* have the same type.
@@ -877,7 +879,7 @@ What is the value of l7?
 -}
 
 -- >>> l7
---
+-- "hello 552!"
 
 {-
 "Cons"tructing Lists
@@ -906,9 +908,10 @@ Try evaluating `c1` and `c2`.
 -}
 
 -- >>> c1
---
+-- [True,False,False]
+
 -- >>> c2
---
+-- [1]
 
 {-
 And check out the type of `c3`.
@@ -940,8 +943,10 @@ Try evaluating `s1` and `s2`.
 -}
 
 -- >>> s1
---
+-- "abc"
+
 -- >>> s2
+-- "abc"
 --
 
 {-
@@ -1001,7 +1006,7 @@ clone :: a -> Int -> [a]
 We implement this function by recursion on the integer argument.
 -}
 
-clone x n = if n <= 0 then [] else x : clone x (n -1)
+clone x n = if n <= 0 then [] else x : clone x (n - 1)
 
 {-
 **Step 4**: Run the tests.
@@ -1058,7 +1063,7 @@ range :: Int -> Int -> [Int]
 **Step 3**: Define the function. This part is for you to do for your quiz.
 -}
 
-range i j = undefined
+range i j = if i > j then [] else i : range (i + 1) j
 
 {-
 **Step 4**: Run the tests.
